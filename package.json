@@ -10,6 +10,5 @@
     "event-stream": "~3.1.0",
     "glob": "^5.0.14"
   },
-  "readmeFilename": "README.md",
-  "private": true
+  "readmeFilename": "README.md"
 }
