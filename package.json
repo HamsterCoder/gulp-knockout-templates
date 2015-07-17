@@ -10,5 +10,9 @@
     "event-stream": "~3.1.0",
     "glob": "^5.0.14"
   },
+  "keywords": [
+    "gulp",
+    "knockout"
+  ],
   "readmeFilename": "README.md"
 }
