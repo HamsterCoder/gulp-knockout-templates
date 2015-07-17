@@ -1,0 +1,15 @@
+{
+  "name": "gulp-knockout-templates",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/HamsterCoder/gulp-knockout-templates.git"
+  },
+  "dependencies": {
+    "gulp-util": "~2.2.9",
+    "event-stream": "~3.1.0",
+    "glob": "^5.0.14"
+  },
+  "readmeFilename": "README.md",
+  "private": true
+}
