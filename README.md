@@ -1,5 +1,5 @@
 # gulp-knockout-templates
-Include external knockout templates when building project with gulp
+Include external knockout templates when building project with gulp. Convinient addition to using knockout-amd-helpers.
 
 ## Disclaimer
 Project is still at it's very early stage. Use at your own risk. Pull requests and issues are welcome.
@@ -67,8 +67,8 @@ gulp.task('page', function () {
 
 ### Parameters
 
-*  path {String} - path to your templates, defaults to ```./```
-*  suffix {String} - your templates extention, defualts to ```.tmpl.html```
+*  ```path {String}``` - path to your templates, defaults to ```./```
+*  ```suffix {String}``` - your template files extention, defaults to ```.tmpl.html```
 
 
 
