@@ -1,6 +1,6 @@
 {
   "name": "gulp-knockout-templates",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "git://github.com/HamsterCoder/gulp-knockout-templates.git"
