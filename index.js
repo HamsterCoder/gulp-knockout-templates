@@ -2,7 +2,7 @@
  gulp-knockout-templates
  Author: Olga Kobets (HamsterCoder)
  License: MIT (http://www.opensource.org/licenses/mit-license)
- Version 0.0.1
+ Version 0.0.3
  */
 
 (function () {
@@ -13,7 +13,29 @@
 
     var includeMarker = '<!-- Gulp Knockout Templates -->';
 
-    function includeTemplatesAtIndex(path, suffix, output) {
+    function includeTemplatesAtIndex(output, settings) {
+        var debug = parseSetting(settings, 'debug', false);
+        var removeDocs = parseSetting(settings, 'removeDocs', false);
+        var suffix = parseSetting(settings, 'suffix', '.tmpl.html');
+        var path = parseSetting(settings, 'path', './');
+
+        /**
+         * Templates may have descriptions in format <!-- parameters: ... -->,
+         * these descriptions tend to get bulky, so it is nice to remove those when building production version.
+         * Other comments are not affected by this simple cleanup.
+         */
+        function removeDocsFromTemplate(template) {
+            var removeDocsRegex = /\<\!\-\-\s?parameters:[\s\S]*?\-\-\>/;
+
+            return template.replace(removeDocsRegex, function (match) {
+                if (debug) {
+                    gulpUtil.log('Removed docs', match);
+                }
+
+                return '';
+            });
+        }
+
         var includeIndex = output.indexOf(includeMarker);
 
         if (includeIndex !== -1) {
@@ -23,15 +45,22 @@
             changedOutput += output.substring(0, includeIndex);
 
             var templates = glob.sync(wildcard);
+
             if (templates) {
                 templates.forEach(function (templatePath) {
                     var templateName = getTemplateName(templatePath, path, suffix);
 
-                    gulpUtil.log('Processing template', templateName);
+                    if (debug) {
+                        gulpUtil.log('Processing template', templateName);
+                    }
 
-                    changedOutput += '<script type="text/html" id="' + templateName + '">' +
-                        String(fs.readFileSync(templatePath)) +
-                        '</script>';
+                    var template = String(fs.readFileSync(templatePath));
+
+                    if (removeDocs) {
+                        template = removeDocsFromTemplate(template);
+                    }
+
+                    changedOutput += '<script type="text/html" id="' + templateName + '">' + template + '</script>';
                 });
             } else {
                 gulpUtil.log('No templates found at ', wildcard);
@@ -56,9 +85,6 @@
     }
 
     module.exports = function (settings) {
-        var suffix = parseSetting(settings, 'suffix', '.tmpl.html');
-        var path = parseSetting(settings, 'path', './');
-
         function includeTemplates(file) {
             var contents = String(file.contents);
 
@@ -67,7 +93,7 @@
             }
 
             if (file.isBuffer()) {
-                contents = includeTemplatesAtIndex(path, suffix, contents);
+                contents = includeTemplatesAtIndex(contents, settings);
                 file.contents = new Buffer(contents);
             }
 
