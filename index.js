@@ -18,6 +18,7 @@
         var removeDocs = parseSetting(settings, 'removeDocs', false);
         var suffix = parseSetting(settings, 'suffix', '.tmpl.html');
         var path = parseSetting(settings, 'path', './');
+        var defaultPath = parseSetting(settings, 'defaultPath', path);
 
         /**
          * Templates may have descriptions in format <!-- parameters: ... -->,
@@ -48,7 +49,7 @@
 
             if (templates) {
                 templates.forEach(function (templatePath) {
-                    var templateName = getTemplateName(templatePath, path, suffix);
+                    var templateName = getTemplateName(templatePath, defaultPath, suffix);
 
                     if (debug) {
                         gulpUtil.log('Processing template', templateName);
